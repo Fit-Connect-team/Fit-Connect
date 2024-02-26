@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <div class="d-flex justify-content-center py-4">
+                        <a href="index.html" class="logo d-flex align-items-center w-auto">
+                            <img src="assets/img/logo.png" alt="">
+                            <span class="d-none d-lg-block">NiceAdmin</span>
+                        </a>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="pt-4 pb-2">
+                                <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                <p class="text-center small">Enter your personal details to create account</p>
+                            </div>
+                            {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation', 'id': 'registrationForm'}}) }}
+                            <div class="form-group">
+                                {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Name'}}) }}
+                                {{ form_errors(form.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.email, 'Your Email', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.password.first, 'Password', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                                {{ form_errors(form.password.first) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.password.second, 'Confirm Password', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirm Password'}}) }}
+                                {{ form_errors(form.password.second) }}
+                            </div>
+                            
+                            <div class="form-group">
+                                <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                            </div>
+                            <div class="form-group">
+                                <p class="small mb-0">Already have an account? <a href="{{ path('app_login') }}">Log in</a></p>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                    <div class="credits">
+                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
