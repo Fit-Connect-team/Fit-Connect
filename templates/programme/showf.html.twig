@@ -1,0 +1,28 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %}Programme{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Programme Details</h1>
+        <div class="card border-primary">
+            
+            <div class="card-body">
+                <p class="card-text"><strong>Type:</strong> {{ programme.type }}</p>
+                <p class="card-text"><strong>Duration:</strong> {{ programme.duree }}</p>
+                <p class="card-text"><strong>Start Date:</strong> {{ programme.startdate ? programme.startdate|date('Y-m-d') : '' }}</p>
+                <p class="card-text"><strong>Coach:</strong> {{ programme.coach }}</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <a href="{{ path('app_programme_indexf') }}" class="btn btn-primary">Back to List</a>
+                <a href="{{ path('app_programme_editf', {'id': programme.id}) }}" class="btn btn-secondary">Edit</a>
+            </div>
+            <div class="col-md-6 text-right">
+                {{ include('programme/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

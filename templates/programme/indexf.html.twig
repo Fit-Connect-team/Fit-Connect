@@ -1,0 +1,30 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %}Programme index{% endblock %}
+
+{% block body %}
+    <h1>Mes Programmes</h1>
+
+    <div class="row">
+        {% for programme in programmes %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><strong>Type:</strong> {{ programme.type }}</p>
+                        <p class="card-text"><strong>Durée:</strong> {{ programme.duree }}</p>
+                        <p class="card-text"><strong>Date de début:</strong> {{ programme.startdate ? programme.startdate|date('Y-m-d') : '' }}</p>
+                        <p class="card-text"><strong>Coach:</strong> {{ programme.Coach }}</p>
+                        <a href="{{ path('app_programme_showf', {'id': programme.id}) }}" class="btn btn-primary">Show</a>
+                        <a href="{{ path('app_programme_editf', {'id': programme.id}) }}" class="btn btn-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col">
+                <p>No records found</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('app_programme_new') }}" class="btn btn-success">Create new</a>
+{% endblock %}
