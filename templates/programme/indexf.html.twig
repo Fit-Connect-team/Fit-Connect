@@ -3,28 +3,93 @@
 {% block title %}Programme index{% endblock %}
 
 {% block body %}
-    <h1>Mes Programmes</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <div class="row">
-        {% for programme in programmes %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text"><strong>Type:</strong> {{ programme.type }}</p>
-                        <p class="card-text"><strong>Durée:</strong> {{ programme.duree }}</p>
-                        <p class="card-text"><strong>Date de début:</strong> {{ programme.startdate ? programme.startdate|date('Y-m-d') : '' }}</p>
-                        <p class="card-text"><strong>Coach:</strong> {{ programme.Coach }}</p>
-                        <a href="{{ path('app_programme_showf', {'id': programme.id}) }}" class="btn btn-primary">Show</a>
-                        <a href="{{ path('app_programme_editf', {'id': programme.id}) }}" class="btn btn-secondary">Edit</a>
-                    </div>
+<div class="row">
+
+<div class="container-fluid">
+    <div class="booking-form-wrapper p-r z-2">
+        <form class="booking-form-two">
+            <div class="form_group">
+                <select class="form-control rounded-pill" id="searchLocationInput" onchange="filterCards()">
+                    <option value="">Filter By type</option>
+                    <option value="Perte de poids">Perte de poids</option>
+                    <option value="Prise de Masse">Prise de Masse</option>
+                    <option value="Programme de flexibilité et de mobilité">Programme de flexibilité et de mobilité
+                    </option>
+                    <option value="préparation physique spécifique au sport">préparation physique spécifique au sport
+                    </option>
+
+                </select>
+            </div>
+            <script>
+                function filterCards() {
+                    const locationFilter = document.getElementById('searchLocationInput').value.toUpperCase();
+                    const cards = document.querySelectorAll('.job-item');
+                    cards.forEach(card => {
+                        const locationContent = card.getAttribute('data-location').toUpperCase();
+                        const locationMatch = locationContent.includes(locationFilter);
+                        const isVisible = locationMatch;
+                        card.classList.toggle('d-none', !isVisible);
+                    });
+                }
+            </script><!-- 2 -->
+
+    </form>
+</div>
+</div>
+<h1>Mes Programmes</h1>
+
+    <div class="col-md-4 mb-4">
+    {% for programme in programmes %}
+        <div class="card">
+            <div class="card-body">
+                <div class="job-item" data-location="{{ programme.type }}">
+                    <p class="card-text"><strong>Type:</strong> {{ programme.type }}</p>
+                    <p class="card-text"><strong>Durée:</strong> {{ programme.duree }}</p>
+                    <p class="card-text"><strong>Date de début:</strong>
+                                {{ programme.startdate|date('Y-m-d') }}
+</p>
+                    <p class="card-text"><strong>Coach:</strong> {{ programme.Coach }}</p>
+                    <a href="{{ path('app_programme_showf', {'id': programme.id}) }}" class="btn btn-primary">Show
+                        programme</a>
                 </div>
-            </div>
-        {% else %}
-            <div class="col">
-                <p>No records found</p>
-            </div>
-        {% endfor %}
-    </div>
 
+            </div>
+
+    </div>
+    {% else %}
+    <div class="col">
+        <p>No records found</p>
+    </div>
+    {% endfor %}
     <a href="{{ path('app_programme_new') }}" class="btn btn-success">Create new</a>
+    <div class="pagination">
+    <a>{{ knp_pagination_render(programmes) }}</a>
+    </div>
+</div>
+
+</div>
+
+<style>
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+</style>
 {% endblock %}

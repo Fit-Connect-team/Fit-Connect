@@ -1,3 +1,9 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+app_Programme_stats:
+    path: /coachstats
+    controller: App\Controller\ProgrammeController::coachWithMostPrograms
+    methods: ['GET', 'POST']

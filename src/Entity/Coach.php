@@ -6,6 +6,7 @@ use App\Repository\CoachRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CoachRepository::class)]
 class Coach
@@ -16,12 +17,17 @@ class Coach
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Name cannot be blank')]
+    #[Assert\Length(max: 255, maxMessage: 'Name cannot be longer than {{ limit }} characters')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Email cannot be blank')]
+    #[Assert\Email(message: 'Invalid email format')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Image URL cannot be blank')]
     private ?string $img = null;
 
     #[ORM\OneToMany(targetEntity: Programme::class, mappedBy: 'Coach')]

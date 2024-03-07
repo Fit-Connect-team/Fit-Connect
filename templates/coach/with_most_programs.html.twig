@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coach stats{% endblock %}
+
+{% block body %}
+
+{% if coachProgramCounts is not empty %}
+    <h1>Coaches with Most Programs</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Coach Name</th>
+                <th>Number of Programs</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coachName, numPrograms in coachProgramCounts %}
+                <tr>
+                    <td>{{ coachName }}</td>
+                    <td>{{ numPrograms }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No programs found.</p>
+{% endif %}
+
+{% endblock %}

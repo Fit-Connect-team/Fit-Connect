@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProgrammeRepository::class)]
 class Programme
@@ -17,14 +18,19 @@ class Programme
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Type cannot be blank')]
+    #[Assert\Length(max: 255, maxMessage: 'Type cannot be longer than {{ limit }} characters')]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Duree cannot be blank')]
+    #[Assert\Length(max: 255, maxMessage: 'Duree cannot be longer than {{ limit }} characters')]
     private ?string $duree = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("today", message: "The start date cannot be before today")]
+    #[Assert\Type("\DateTimeInterface", message: 'Start date must be a valid date')]
     private ?\DateTimeInterface $startdate = null;
 
+    #[Assert\NotBlank(message: 'coach  cannot be empty')]
     #[ORM\ManyToOne(inversedBy: 'programmes')]
     private ?Coach $Coach = null;
 

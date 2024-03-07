@@ -32,6 +32,8 @@ class ProgrammeType extends AbstractType
                     'préparation physique spécifique au sport' => 'préparation physique spécifique au sport',
 
                 ],
+                'attr' => ['class' => 'form-control'],
+
                 'placeholder' => 'Choose a Type',
                 
             ])
@@ -44,13 +46,18 @@ class ProgrammeType extends AbstractType
                     '360 jour' => '360 jour',
 
                 ],
+                'attr' => ['class' => 'form-control'],
+
                 'placeholder' => 'Choose Program ',
                 
             ])
             ->add('startdate', DateType::class, [
-                'widget' => 'single_text', // Utilise un élément input de type date, permettant aux navigateurs de fournir un sélecteur de date
-                'attr' => ['class' => 'my-date-class'], // Classe CSS personnalisée si nécessaire
-                'label' => 'Date de PROGRAMME',
+                'label' => 'Program Start Date',
+                'widget' => 'single_text', // Renders as a single text input
+                'attr' => ['class' => 'form-control'],
+                'html5' => true, // Ensure HTML5 date picker is not used
+                'data' => new \DateTime(), // Se
+
                 // autres options...
             ])
             ->add('Coach', EntityType::class, [
@@ -58,6 +65,10 @@ class ProgrammeType extends AbstractType
                 'choice_value' => 'id', // Specify which property of the object represents the value
                 'choice_label' => 'name', // Specify which property of the object represents the label
                 'placeholder' => 'Choose a coach',
+                'attr' => ['class' => 'form-control'],
+                 // Allow null values
+
+
             ]);
     }
 

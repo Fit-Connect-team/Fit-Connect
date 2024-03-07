@@ -10,8 +10,10 @@
             <div class="card-body">
                 <p class="card-text"><strong>Type:</strong> {{ programme.type }}</p>
                 <p class="card-text"><strong>Duration:</strong> {{ programme.duree }}</p>
-                <p class="card-text"><strong>Start Date:</strong> {{ programme.startdate ? programme.startdate|date('Y-m-d') : '' }}</p>
+                <p class="card-text"><strong>Start Date:</strong>         {{ programme.startdate|date('Y-m-d') }}
+</p>
                 <p class="card-text"><strong>Coach:</strong> {{ programme.coach }}</p>
+
             </div>
         </div>
 
@@ -19,10 +21,14 @@
             <div class="col-md-6">
                 <a href="{{ path('app_programme_indexf') }}" class="btn btn-primary">Back to List</a>
                 <a href="{{ path('app_programme_editf', {'id': programme.id}) }}" class="btn btn-secondary">Edit</a>
+                <a href="{{ path('app_reservation_showpdf', {'id': programme.id}) }}" class="btn btn-secondary">Print</a>
+
             </div>
             <div class="col-md-6 text-right">
+
                 {{ include('programme/_delete_form.html.twig') }}
             </div>
+
         </div>
     </div>
 {% endblock %}

@@ -22,10 +22,11 @@
                 <td>{{ programme.id }}</td>
                 <td>{{ programme.type }}</td>
                 <td>{{ programme.duree }}</td>
-                <td>{{ programme.startdate ? programme.startdate|date('Y-m-d') : '' }}</td>
+                <td>        {{ programme.startdate|date('Y-m-d') }}
+</td>
                 <td>{{ programme.Coach }}</td>
                 <td>
-                    <a href="{{ path('app_programme_show', {'id': programme.id}) }}">show</a>
+                    <a href="{{ path('app_programme_show', {'id': programme.id}) }}" >show</a>
                     <a href="{{ path('app_programme_edit', {'id': programme.id}) }}">edit</a>
                 </td>
             </tr>
@@ -37,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_programme_new') }}">Create new</a>
+    <a href="{{ path('app_programme_new') }}"class="btn btn-primary">Create new</a>
 {% endblock %}

@@ -1,0 +1,70 @@
+{% block body %}
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Program Details</h1>
+        <h3>Dear Client,</h3>
+        <h2>You will be Contacted by Coach Mail</h2>
+
+
+        <table class="table">
+        <tbody>
+            <tr>
+                <th>Type</th>
+                <td>{{ programme.type }}</td>
+            </tr>
+            <tr>
+                <th>Duree</th>
+                <td>{{ programme.duree }}</td>
+            </tr>
+            <tr>
+                <th>Startdate</th>
+                <td>        {{ programme.startdate|date('Y-m-d') }}
+</td>
+            </tr>
+            <tr>
+                <th>Coach</th>
+                <td>{{ programme.coach }}</td>
+            </tr>
+          
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

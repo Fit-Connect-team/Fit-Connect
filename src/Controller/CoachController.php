@@ -14,6 +14,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 #[Route('/coach')]
 class CoachController extends AbstractController
@@ -137,4 +138,7 @@ class CoachController extends AbstractController
 
         return $this->redirectToRoute('app_coach_index', [], Response::HTTP_SEE_OTHER);
     }
+  
+
+    
 }
