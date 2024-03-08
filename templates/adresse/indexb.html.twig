@@ -1,0 +1,30 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}Index des Produits{% endblock %}
+
+{% block body %}
+    <h1>Mes Adresse</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cite</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adresse in adresses %}
+            <tr>
+                <td>{{ adresse.id }}</td>
+                <td>{{ adresse.cite }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no adresse found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_livraison_indexb') }}">Retour a livraison</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="billing-address-form">
+        <p>
+            {{ form_row(form.cite, {'attr': {'placeholder': 'Enter the cite ..', 'class': 'form-control'}}) }}
+        </p>
+        <p>
+            {{ form_row(form.Livraison, {'attr': {'placeholder': 'Enter the Livraison ..', 'class': 'form-control'}}) }}
+        </p>
+    </div>
+    <br>
+    <button class="btn btn-primary">{{ button_label|default('Next') }}</button>
+{{ form_end(form) }}

@@ -38,7 +38,11 @@
         window.location.href = "{{ path('app_client') }}";
     </script>
 {% endif %}
-
+{% if not is_granted('ROLE_ADMIN') %}
+    <script>
+        window.location.href = "{{ path('app_client') }}";
+    </script>
+{% endif %}
 		{% block navbar %}
 
 			<div
@@ -86,13 +90,19 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="{{path('app_category_index')}}">
+							<i class="fa-solid fa-calendar-days"></i>
+							<span>Category</span>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="index.html">
 							<i class="fa-solid fa-business-time"></i>
 							<span>Coach Panel</span>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="index.html">
+						<a class="nav-link" href="{{path('app_livraison_indexb')}}">
 							<i class="fa-solid fa-truck"></i>
 							<span>Delivery Panel</span>
 						</a>

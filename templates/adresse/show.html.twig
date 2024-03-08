@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresse{% endblock %}
+
+{% block body %}
+    <h1>Adresse</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>City</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adresse in adresses %}
+            <tr>
+                <td>{{ adresse.id }}</td>
+                <td>{{ adresse.city }}</td>
+                <td>
+                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">encore pas d'adresse</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

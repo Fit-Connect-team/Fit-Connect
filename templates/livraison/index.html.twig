@@ -1,0 +1,43 @@
+{% extends 'client/index.html.twig' %}
+
+{% block title %}Index des Produits{% endblock %}
+
+{% block body %}
+    <h1>Mes demandes Livraison</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>ProduitId</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livraison in livraisons %}
+            <tr>
+                <td>{{ livraison.id }}</td>
+<td>
+    {% if livraison.status == 0 %}
+        Not delivered
+    {% elseif livraison.status == 1 %}
+        Delivered
+    {% else %}
+        Unknown
+    {% endif %}
+</td>                <td>{{ livraison.produit }}</td>
+                <td>
+                    <a href="{{ path('app_livraison_edit', {'id': livraison.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">encore pas de livraison</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="{{ path('app_adresse_new') }}">Ajouter adresse livraison</a>
+    <a class="btn btn-primary" href="{{ path('app_adresse_index') }}">Mes adresse</a>
+{% endblock %}

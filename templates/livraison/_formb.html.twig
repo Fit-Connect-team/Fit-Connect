@@ -1,0 +1,9 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="billing-address-form">
+        <p>
+            {{ form_widget(form.status, {'attr': {'placeholder': 'Enter le status ..', 'class': 'form-control'}}) }}
+        </p>
+    </div>
+    <br>
+<button class="btn btn-primary">{{ button_label|default('Next') }}</button>
+{{ form_end(form) }}
