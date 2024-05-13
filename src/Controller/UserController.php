@@ -13,8 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -136,44 +135,53 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('d/{id}/editf', name: 'app_user_editf', methods: ['GET', 'POST'])]
-    public function editf(Request $request, User $user, EntityManagerInterface $entityManager,SluggerInterface $slugger): Response
-    {
-        $form = $this->createForm(User1Type::class, $user);
-        $form->handleRequest($request);
+    #[Route('d/{id}/editf', name: 'app_user_edit', methods: ['GET', 'POST'])]
+public function editf(Request $request, User $user, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+{
+    $form = $this->createForm(User1Type::class, $user);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-             /** @var UploadedFile $imageFile */
-             $imageFile = $form->get('image')->getData();
-    
-             if ($imageFile) {
-                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                 $safeFilename = $slugger->slug($originalFilename);
-                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-     
-                 try {
-                     $imageFile->move(
-                         $this->getParameter('img_directory'),
-                         $newFilename
-                     );
-                 } catch (FileException $e) {
-                 }
-     
-                 $user->setImage($newFilename);
-             }
-
-             $hashedPassword = hash('sha1', $user->getPassword());
-            $user->setPassword($hashedPassword);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_client', [], Response::HTTP_SEE_OTHER);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $imageFile = $form->get('image')->getData();
+        
+        // Handle image upload
+        if ($imageFile) {
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            
+            try {
+                $imageFile->move(
+                    $this->getParameter('img_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // Handle file upload error
+                $this->addFlash('error', 'An error occurred while uploading the image.');
+                return $this->redirectToRoute('app_user_editf', ['id' => $user->getId()]);
+            }
+            
+            $user->setImage($newFilename);
         }
 
-        return $this->renderForm('user/editf.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+        try {
+            $entityManager->flush();
+            $this->addFlash('success', 'User profile updated successfully.');
+        } catch (\Exception $e) {
+            // Handle database error
+            $this->addFlash('error', 'An error occurred while updating the user profile.');
+            return $this->redirectToRoute('app_user_editf', ['id' => $user->getId()]);
+        }
+
+        return $this->redirectToRoute('app_client');
     }
+
+    return $this->renderForm('user/editf.html.twig', [
+        'user' => $user,
+        'form' => $form,
+    ]);
+}
+
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
@@ -226,17 +234,5 @@ public function searchAndSort(Request $request, UserRepository $userRepository):
         'users' => $users,
     ]);
 }
-#[Route('/mailer', name: 'app_mailer')]
-public function sendEmail(MailerInterface $mailer)
-{
-    $email = (new Email());
 
-//….
-$mailer->send($email);
-
-    // …
-  return new Response(
-      'Email was sent'
-   );
-}
 }

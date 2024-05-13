@@ -1,35 +1,64 @@
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-<div class="form-group">
-    {{ form_label(form.nom) }}
-    {{ form_widget(form.nom) }}
-    {{ form_errors(form.nom) }}
+    <div class="form-group">
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.prix) }}
+        {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.prix) }}
+    </div>
+
+    <div class="form-group custom-file-upload">
+        {{ form_label(form.image) }}
+        <div class="input-group">
+            <div class="custom-file">
+                {{ form_widget(form.image, {'attr': {'style': 'display:none;', 'onchange': 'previewImage(event)', 'class': 'custom-file-input'}}) }}
+                <label for="{{ form.image.vars.id }}" class="custom-file-label btn btn-primary">Choose file</label>
+            </div>
+            {{ form_errors(form.image) }}
+        </div>
+        <img id="imagePreview" src="" alt="Image preview" style="max-width: 200px; max-height: 200px; display: none;"/>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.category) }}
+        {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.category) }}
+    </div>
+    <div class="form-group">
+
+    <center>
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    
+        <a href="{{ path('app_produit_index') }}" class="btn btn-info">back to list</a>
+</center>
+
+</div>
+    {{ form_end(form) }}
+
 </div>
 
-<div class="form-group">
-    {{ form_label(form.prix) }}
-    {{ form_widget(form.prix) }}
-    {{ form_errors(form.prix) }}
-</div>
 
-<div class="form-group">
-    {{ form_label(form.marque) }}
-    {{ form_widget(form.marque) }}
-    {{ form_errors(form.marque) }}
-</div>
+<style>
+.custom-file-upload .custom-file-label {
+    overflow: hidden;
+}
+</style>
 
-<div class="form-group">
-    {{ form_label(form.image) }}
-    {{ form_widget(form.image) }}
-    {{ form_errors(form.image) }}
-</div>
-
-<div class="form-group">
-    {{ form_label(form.user) }}
-    {{ form_widget(form.user) }}
-    {{ form_errors(form.user) }}
-</div>
-
-{{ form_widget(form.save) }}
-
-{{ form_end(form) }}
+<script>
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        const output = document.getElementById('imagePreview');
+        output.src = reader.result;
+        output.style.display = 'block'; // Make the image visible
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>

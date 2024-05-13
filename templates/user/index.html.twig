@@ -15,10 +15,66 @@
         #sortByNameBtn i {
             padding: 0 5px;
         }
+    /* Adjust table row alignment and size */
+        #dataTable tbody tr {
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        /* Add padding to sort icon */
+        #sortByNameBtn i {
+            padding: 0 5px;
+        }
+
+        /* Improve search input field */
+        #searchInput {
+            border-radius: 0;
+            border-color: #ccc;
+            margin-right: 10px;
+        }
+
+        /* Improve search button */
+        #searchButton {
+            border-radius: 0;
+            border-color: #ccc;
+        }
+
+        /* Style view profile dropdown button */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-menu {
+            min-width: 120px;
+        }
+
+        .dropdown-menu a {
+            padding: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Improve pagination style */
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination .page-link {
+            border-radius: 0 !important;
+        }
     </style>
 {% endblock %}
 
+
+
 {% block body %}
+    <div id="banNotification" style="display: none; background-color: #f2dede; color: #a94442; padding: 10px; border: 1px solid #ebccd1; border-radius: 4px; margin-top: 10px;">
+    User banned successfully!
+</div>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Users</h6>
@@ -38,8 +94,10 @@
                             <th>Email</th>
                             <th>Roles</th>
                             <th>Tel</th>
-                            <th>Image</th>
+                            <th>View</th>
+                            <th>image</th>
                             <th>Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -120,5 +178,34 @@
         // View User Detail
 
 
+    </script>
+
+     <script>
+                     // Search functionality with AJAX
+
+
+
+
+
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var searchText = $(this).val().toLowerCase();
+                $.ajax({
+                    url: '{{ path('search_users') }}', // Update with your route for searching users
+                    method: 'POST', // Change the method to POST
+                    data: {
+                        searchText: searchText // Change 'search' to 'searchText' to match the name expected in the controller
+                    },
+                    success: function(response) {
+                        $('#dataTable tbody').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Sorting by name (no changes needed)
+        });
     </script>
 {% endblock %}

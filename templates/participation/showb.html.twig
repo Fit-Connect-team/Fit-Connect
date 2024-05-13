@@ -2,12 +2,23 @@
 
 {% block title %}Participation{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn-black-yellow {
+            background-color: #000;
+            color: #FFD700;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
+
+
     <h1>Participation</h1>
 
     <table class="table">
         <tbody>
-       
             <tr>
                 <th>Nom</th>
                 <td>{{ participation.nom }}</td>
@@ -16,7 +27,6 @@
                 <th>Prenom</th>
                 <td>{{ participation.prenom }}</td>
             </tr>
-           
             <tr>
                 <th>Tel</th>
                 <td>{{ participation.tel }}</td>
@@ -28,7 +38,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_participation_indexb') }}">back to list</a>
-
+    <a href="{{ path('app_participation_indexb') }}" class="btn btn-black-yellow">Back to list</a>
 
 {% endblock %}

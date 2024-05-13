@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products PDF</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font */
+            background-color: #eaeaea;
+            padding: 20px;
+            color: #333; /* Darker font color for better readability */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px; /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Softened shadow */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .product {
+            margin-bottom: 40px; /* Increased spacing */
+            border-bottom: 2px solid #eee; /* Lighter and thicker border */
+            padding-bottom: 30px; /* Increased padding */
+        }
+        .product-info {
+            margin-bottom: 15px; /* Increased spacing */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-info label {
+            font-weight: bold;
+            color: #444;
+            flex: 1;
+        }
+        .product-info span {
+            flex: 2;
+            text-align: right;
+        }
+        img {
+            border-radius: 5px; /* Rounded corners for images */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Products Information</h1>
+        {% for p in produit %} <!-- Assuming 'products' is the correct variable -->
+            <div class="product">
+                <div class="product-info">
+                    <label>Type Produit:</label>
+                    <span>{{ p.nom }}</span>
+                </div>
+                <div class="product-info">
+                    <label>Prix Produit:</label>
+                    <span>{{ p.prix }}</span>
+                </div>
+                <div class="product-info">
+                    <label>Category:</label>
+                    <span>{{ p.category.nom }}</span>
+                </div>
+                <div class="product-info">
+                    <label>Utilisateur:</label>
+                    <span>{{ p.user.name }}</span>
+                </div>
+                <div>
+                    <label>Image :</label>
+                    <span><img src="./img/{{ p.image }}"></span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

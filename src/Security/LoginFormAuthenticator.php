@@ -1,5 +1,4 @@
 <?php
-// src/Security/LoginFormAuthenticator.php
 
 namespace App\Security;
 
@@ -36,9 +35,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
+
         // Retrieve the user from the database based on the email
         $user = $this->userRepository->findOneByEmail($email);
-
+        dump($request->request->all());
         // Check if the user exists
         if (!$user) {
             throw new CustomUserMessageAuthenticationException('Invalid email or password.');
@@ -49,7 +49,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             throw new CustomUserMessageAuthenticationException('Your account has been banned.');
         }
 
-        $hashedPassword = hash('sha1', $request->request->get('password', ''));
+        $hashedPassword = $request->request->get('password', '');
 
         return new Passport(
             new UserBadge($email),

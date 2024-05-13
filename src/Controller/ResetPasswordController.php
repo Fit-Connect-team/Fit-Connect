@@ -73,7 +73,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Validates and process the reset URL that the user clicked in their email.
      */
-    #[Route('/reset_password', name: 'app_reset_password')]
+    #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
         if ($token) {
@@ -90,7 +90,6 @@ class ResetPasswordController extends AbstractController
         }
 
         try {
-
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
@@ -115,14 +114,15 @@ class ResetPasswordController extends AbstractController
                 $user,
                 $form->get('plainPassword')->getData()
             );
+            $hashedPassword = hash('sha1', $user->getPassword());
 
-            $user->setPassword($encodedPassword);
+            $user->setPassword( $hashedPassword) ;
             $this->entityManager->flush();
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -158,7 +158,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('SecurityAdmin@security.com', 'Security'))
+            ->from(new Address('support@sip-academy.com', 'Security'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')

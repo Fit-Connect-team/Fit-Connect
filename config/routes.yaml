@@ -16,10 +16,7 @@ app_client:
     path: /client
     controller: App\Controller\BlogController::indexclient
     
-app_reset_password:
-    path: /reset_password
-    controller: App\Controller\SecurityController::resetPass
-    # config/routes.yaml
+
 # config/routes.yaml
 
 # config/routes.yaml

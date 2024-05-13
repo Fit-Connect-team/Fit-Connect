@@ -1,53 +1,82 @@
-{% extends 'client/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
 
-
+{% block navbar %}
+{% endblock %}
 
 {% block footer %}
     {# Add any footer content here if needed #}
 {% endblock %}
 
 {% block body %}
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="w-50">
-        <form {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>{{ form_label(form.email) }}</td>
-                        <td>{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.password.first) }}</td>
-                        <td>{{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.password.second) }}</td>
-                        <td>{{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.name) }}</td>
-                        <td>{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.prenom) }}</td>
-                        <td>{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.tel) }}</td>
-                        <td>{{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.image) }}</td>
-                        <td>{{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="text-center mt-3">
-                <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Edit User</h2>
+                    
+                    {# Display error messages if they exist #}
+                    {% if app.flashes('error') %}
+                        <div class="alert alert-danger">
+                            {% for message in app.flashes('error') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <form {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label">Email</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-4 col-form-label">Password</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="confirm_password" class="col-sm-4 col-form-label">Confirm Password</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-4 col-form-label">Name</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="prenom" class="col-sm-4 col-form-label">Prenom</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="tel" class="col-sm-4 col-form-label">Tel</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="image" class="col-sm-4 col-form-label">Image</label>
+                            <div class="col-sm-8">
+                                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                            <a href="{{ path('app_client') }}" class="btn btn-secondary ml-2">Back</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}
